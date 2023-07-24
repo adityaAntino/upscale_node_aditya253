@@ -1,7 +1,7 @@
     
     
-    const serverHeader = function(res,statusCode){
-        res.writeHead(statusCode,{'Content-type': 'text/plain'});
+    const serverHeader = function(res,statusCode,contentType){
+        res.writeHead(statusCode,{'Content-type': `${contentType}`});
     }
 
 

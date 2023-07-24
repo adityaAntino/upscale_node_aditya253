@@ -7,20 +7,20 @@ const port = 3000
 const server = http.createServer((req, res) => {
     const { method, url } = req;
     if (method === 'GET' && url == '/') {
-        serverHeader(res,200);
+        serverHeader(res, 200, 'text/plain');
         res.end('Welcome to Home Page!');
     }
     else if (method === 'GET' && url === '/about') {
-        serverHeader(res,200);
+        serverHeader(res, 200, 'text/html');
         res.end('This is about page');
     }
     else if (method === 'POST' && url === '/submit') {
-        serverHeader(res,200);
+        serverHeader(res, 200, 'text/html');
         res.end('Request Submitted');
     }
     else {
         serverHeader(400);
-        res.end('Page not found');
+        res.end('Page not found', 'text/plain');
     }
 });
 

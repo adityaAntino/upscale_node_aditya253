@@ -6,7 +6,9 @@ const port = 3000
 
 const server = http.createServer((req, res) => {
     const { method, url } = req;
-    if (method === 'GET' && url == '/') {
+        console.log(`method ${method} url ${url}`)
+    if (method === 'GET' && url === '/') {
+    
         serverHeader(res, 200, 'text/plain');
         res.end('Welcome to Home Page!');
     }

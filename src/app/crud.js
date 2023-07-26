@@ -3,7 +3,7 @@ const router = require('express').Router();
 var primaryData = [];
 
 
-
+///GET ARRAY
 router.get('/get-info', async (req, res) => {
     try {
         console.log(`Get info called ${primaryData}`);
@@ -22,6 +22,7 @@ router.get('/get-info', async (req, res) => {
     }
 });
 
+///ADD SINGLE DATA
 router.post('/add-data', async (req, res) => {
     const { data } = req.body;
     try {
@@ -43,8 +44,9 @@ router.post('/add-data', async (req, res) => {
             "statusCode": 500
         });
     }
-})
+});
 
+///DELETE EVERYTHING
 router.delete('/delete-all', async (req, res) => {
     try {
         console.log('Delete All Data Called');
@@ -63,6 +65,7 @@ router.delete('/delete-all', async (req, res) => {
     }
 });
 
+///DELETE ONLY ONE SET OF DATA
 router.delete('/delete-one', async (req, res) => {
     const { value } = req.body;
     try {
@@ -97,6 +100,7 @@ router.delete('/delete-one', async (req, res) => {
     }
 });
 
+///UPDATE DATA AT INDEX
 router.put('/update-data', async (req, res) => {
     const { previous, next } = req.body;
     try {

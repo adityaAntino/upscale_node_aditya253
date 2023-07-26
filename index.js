@@ -4,7 +4,7 @@ const app = express();
 require('dotenv').config();
 const env  = require('./env/config');
 const port = process.env.PORT || 5500;
-const crudRouter = require('./src/app/crud')
+const crudRouter = require('./src/app/crud/crud')
 
 app.use(express.json({}));
 

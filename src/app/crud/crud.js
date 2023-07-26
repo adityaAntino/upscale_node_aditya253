@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const fs = require('fs');
 
 var primaryData = [];
 
@@ -136,5 +137,26 @@ router.put('/update-data', async (req, res) => {
         });
     }
 });
+
+///UPDATING DATA TO LOCAL JSON FILE
+router.post('/update-json', async (req,res) =>{
+    const {dataToSave} = req.body;
+    const jsonData = JSON.stringify(dataToSave, null, 2); 
+    try{
+        const filePath = 'src/customPrimaryData.json';
+        fs.writeFileSync(filePath, jsonData);
+        return res.status(200).json({
+            "message":"Data Added Successfully",
+            data: dataToSave
+        });
+    }catch(error){
+        console.error('Error saving data:', error);
+        return res.status(500).json({
+            statusCode:500,
+            message: "Failed to save data"
+        });
+    }
+});
+
 
 module.exports = router;

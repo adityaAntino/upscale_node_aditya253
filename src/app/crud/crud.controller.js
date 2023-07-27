@@ -5,6 +5,7 @@ var primaryData = [];
 ///GET ARRAY
 exports.getInfo = async (req, res) => {
     try {
+
         console.log(`Get info called ${primaryData}`);
 
         return res.status(200).json({
@@ -25,7 +26,7 @@ exports.getInfo = async (req, res) => {
 exports.addData = async (req, res) => {
     const { data } = req.body;
     try {
-        if (data != null) {
+         if (data != null) {
             console.log(`ADD DATA CALLED ${data}`);
             primaryData.push(data);
             return res.status(200).json({
@@ -66,7 +67,7 @@ exports.deleteAll = async (req, res) => {
 
 ///DELETE ONLY ONE SET OF DATA
 exports.deleteOne = async (req, res) => {
-    const { value } = req.body;
+    const { data:value } = req.body;
     try {
         console.log(`Delete one called ${value}`);
         if (primaryData.includes(value) || value != null) {

@@ -1,4 +1,7 @@
 {
     "envName":"dev",
-    "port":3000
+    "port":4500,
+    "db_connectionString": {
+        "db": "mongodb+srv://aryaaditya:zWEBnghqouyVPNfU@vigilant.hsfltfy.mongodb.net/"
+      }
 }

@@ -1,5 +1,4 @@
 const router = require('express').Router()
-const userSchema = require("../authentication/auth.schema")
 const User = require("../authentication/auth.schema")
 
 ///GET-USER-DETAILS
@@ -16,6 +15,24 @@ exports.getUserDetails = async (req, res, next) => {
     }
 }
 
+///GET-ALL-USER
+exports.getAllUser = async (req, res, next) => {
+    try {
+        const allUser = await User.find();
+        return res.status(200).json({
+            message:"All Users Fetched",
+            status: 200,
+            data: allUser
+        });
+    }
+    catch (error) {
+        return res.json(500).json({
+            message: "Get all user failed",
+            status: 500,
+            error: error
+        });
+    }
+}
 
 ///UPDATE-USER-DETAILS
 exports.updateUserDetails = async (req, res, next) => {
@@ -53,24 +70,23 @@ exports.updateUserDetails = async (req, res, next) => {
     }
 }
 
-
 ///DELETE-USER
 exports.deleteUser = async (req, res, next) => {
     const userId = req.user._id;
     try {
         if (userId == null) {
             return res.status(404).json({ error: 'User not found' });
-        }else{
+        } else {
             const userDeleted = await User.findByIdAndRemove(userId);
-            if(userDeleted){
+            if (userDeleted) {
                 return res.status(200).json({
                     message: "User Deleted Successfully",
                     status: 200,
                 });
-            }else{
+            } else {
                 return res.status(400).json({
-                    message:"Failed to delete user",
-                    status:400
+                    message: "Failed to delete user",
+                    status: 400
                 });
             }
         }
@@ -79,3 +95,4 @@ exports.deleteUser = async (req, res, next) => {
         res.status(500).json({ message: "Failed to delete user", error: error });
     }
 }
+

@@ -6,11 +6,11 @@ const User = require('./auth.schema')
 ///REGISTER THROUGH EMAIL ROUTER
 exports.register = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password, username } = req.body;
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        const user = await User.create({ email, password: hashedPassword });
-        res.status(200).json({ message: "User Registered Successfully" });
+        const user = await User.create({ email, password: hashedPassword, username });
+        res.status(200).json({ message: "User Registered Successfully",username:username,email:email});
     }
     catch (error) {
         console.log(`/register error ${error}`);
@@ -31,7 +31,6 @@ exports.login = async (req, res) => {
         if (!passwordMatch) {
             return res.status(401).json({ message: "Invalid password" });
         }
-        console.log()
         const token = jwt.sign({ userId: user._id }, 'secretKey', { expiresIn: "1d" });
         res.json({ token });
     }

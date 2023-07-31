@@ -6,6 +6,7 @@ const env = require('./env/config');
 const mongoose = require('mongoose')
 const crudRoute = require('./src/app/crud/crud.route');
 const authRoute = require('./src/app/authentication/auth.route')
+const userRoute = require("./src/app/user/user.router")
 
 app.use(express.json({}));
 
@@ -18,6 +19,7 @@ app.get('/', async (req, res) => {
 
 app.use("/crud", crudRoute);
 app.use("/auth", authRoute);
+app.use("/user", userRoute);
 
 mongoose.connect(env.db_connectionString.db);
 app.listen(env.port, () => {

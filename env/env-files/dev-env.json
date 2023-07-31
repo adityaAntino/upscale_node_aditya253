@@ -3,5 +3,6 @@
     "port":4500,
     "db_connectionString": {
         "db": "mongodb+srv://aryaaditya:zWEBnghqouyVPNfU@vigilant.hsfltfy.mongodb.net/"
-      }
+      },
+      "jwtSecretKey":"secretKey"
 }

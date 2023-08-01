@@ -4,5 +4,7 @@
     "db_connectionString": {
         "db": "mongodb+srv://aryaaditya:zWEBnghqouyVPNfU@vigilant.hsfltfy.mongodb.net/"
       },
-      "jwtSecretKey":"secretKey"
+      "jwtSecretKey":"secretKey",
+      "emailUser":"aditya.antino@gmail.com",
+      "emailPassword":"enssyvhlmhqamvsy"
 }

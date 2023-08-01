@@ -1,5 +1,4 @@
 const express = require('express');
-const { route } = require('express/lib/application');
 const router = express.Router();
 const userController = require('./user.controller')
 const { decodeToken } = require('./user.middleware')

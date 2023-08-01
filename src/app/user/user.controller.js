@@ -19,6 +19,7 @@ exports.getUserDetails = async (req, res, next) => {
 exports.getAllUser = async (req, res, next) => {
     try {
         const allUser = await User.find();
+        
         return res.status(200).json({
             message:"All Users Fetched",
             status: 200,
@@ -95,4 +96,5 @@ exports.deleteUser = async (req, res, next) => {
         res.status(500).json({ message: "Failed to delete user", error: error });
     }
 }
+
 

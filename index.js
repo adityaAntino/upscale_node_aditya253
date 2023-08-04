@@ -8,20 +8,22 @@ const crudRoute = require('./src/app/crud/crud.route');
 const authRoute = require('./src/app/authentication/auth.route')
 const userRoute = require("./src/app/user/user.router")
 const productRoute = require("./src/app/product/product.route")
+const axiosRoute = require("./src/app/axios/axios.route")
 
 app.use(express.json({}));
 
 app.get('/', async (req, res) => {
-    console.log('server running 1');
     return res.status(200).json({
-        message: "application is working."
+        message: "Application is working."
     });
 });
 
+///ENTRY ROUTES
 app.use("/crud", crudRoute);
 app.use("/auth", authRoute);
 app.use("/user", userRoute);
 app.use("/product", productRoute);
+app.use("/axios",axiosRoute);
 
 mongoose.connect(env.db_connectionString.db);
 app.listen(env.port, () => {

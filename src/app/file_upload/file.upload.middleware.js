@@ -1,4 +1,5 @@
 const multer = require("multer");
+const util = require("util");
 const path = require('path');
 const maxSize = 2 * 1024 * 1024;
 
@@ -7,13 +8,15 @@ const storage = multer.diskStorage({
       cb(null, 'uploads/');
     },
     filename: (req, file, cb) => {
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-      cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+      cb(null, file.originalname);
     }
   });
 
-const upload = multer({ storage });
+const upload = multer({storage: storage ,limits: {
+    fileSize: maxSize
+}}).single('file');
 
-module.exports = {
-  upload
-};
+
+const uploadFileMiddleware = util.promisify(upload);
+
+module.exports =  uploadFileMiddleware;

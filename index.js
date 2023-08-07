@@ -9,6 +9,7 @@ const authRoute = require('./src/app/authentication/auth.route')
 const userRoute = require("./src/app/user/user.router")
 const productRoute = require("./src/app/product/product.route")
 const axiosRoute = require("./src/app/axios/axios.route")
+const fileUploadRoute = require('./src/app/file_upload/file.upload.route')
 
 app.use(express.json({}));
 
@@ -24,6 +25,7 @@ app.use("/auth", authRoute);
 app.use("/user", userRoute);
 app.use("/product", productRoute);
 app.use("/axios",axiosRoute);
+app.use("/file-upload",fileUploadRoute);
 
 mongoose.connect(env.db_connectionString.db);
 app.listen(env.port, () => {

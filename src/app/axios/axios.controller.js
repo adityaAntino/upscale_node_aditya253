@@ -1,7 +1,6 @@
 const axios = require('axios')
 
 exports.getDataAxios = async (req, res) => {
-   
         axios.get('https://dummyjson.com/products').then(response => {
             console.log('API CALLED',response);
             res.status(200).json({

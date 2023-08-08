@@ -6,5 +6,12 @@
       },
       "jwtSecretKey":"secretKey",
       "emailUser":"aditya.antino@gmail.com",
-      "emailPassword":"enssyvhlmhqamvsy"
+      "emailPassword":"enssyvhlmhqamvsy",
+      "aws" : {
+        "accessKeyId":"AKIAQ76ZYAILVETSZLWM",
+        "secretAccessKey":"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",
+        "region":"ap-south-1",
+        "bucketName":"upscale-bucket-99"
+      }
+
 }

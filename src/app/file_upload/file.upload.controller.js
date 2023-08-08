@@ -5,6 +5,7 @@ const aws = require('aws-sdk');
 const env = require('../../../env/config')
 const UploadedImageSchema = require('./file.schema');
 const {v4: uuidv4} = require('uuid')
+const customResponse = require("../../utilities/response.handler")
 
 
 ///UPLOAD FILE
@@ -39,9 +40,10 @@ exports.uploadFile = async (req, res) => {
                 imageName: params.Key
             });
 
-            res.status(200).json({ message: 'File uploaded successfully.', file: uploadFile });
-        });
+            // res.status(200).json({ message: 'File uploaded successfully.', file: uploadFile});
 
+            return res.send(customResponse('File Uploaded Successfully',true,200,uploadFile));
+        });
     }
     catch (error) {
         return res.status(500).json({
@@ -51,8 +53,8 @@ exports.uploadFile = async (req, res) => {
     }
 }
 
-///GET UPLOADED FILES
-exports.getUploadedFile = async (req, res) => {
+///GET LOCAL FILES
+exports.getLocalUploadedFiles = async (req, res) => {
     const fileInformation = [];
     fs.readdir('uploads/', function (err, files) {
         if (err) {
@@ -81,8 +83,8 @@ exports.getUploadedFile = async (req, res) => {
     });
 }
 
-///DELETE UPLOADED FILES
-exports.deleteUploadedFile = async (req, res) => {
+///DELETE LOCAL UPLOADED FILES
+exports.deletLocalUploadedFile = async (req, res) => {
     const directory = 'uploads/';
     fs.readdir(directory, function (err, files) {
         if (err) {
@@ -116,4 +118,61 @@ exports.deleteUploadedFile = async (req, res) => {
 
     });
 
+}
+
+///DELETE UPLOADED FILE FROM AWS
+exports.deleteUploadedFileFromAws = async(req,res) => {
+    const reqFileName = req.body.reqFileName;
+    try{
+                ///set up aws
+                aws.config.update(env.aws);
+
+                const s3 = new aws.S3();
+
+                const params = {
+                    Bucket: env.aws.bucketName,
+                    Key: reqFileName,
+                  };
+
+                  const isFileAvailable = await UploadedImageSchema.findOne({
+                    imageName: reqFileName
+                  });
+                  if(isFileAvailable){
+                s3.deleteObject(params,async (error,data) =>  {
+                    if(error){
+                        res.status(400).send({
+                            message: "Failed to delete file",
+                            statusCode: 400,
+                            error:error
+                        });
+                    }else{
+                        const isDeletedFromDb = await UploadedImageSchema.findByIdAndDelete(isFileAvailable._id);
+                        if(isDeletedFromDb){
+                            res.status(200).send({
+                                message: "File Deleted Successfully",
+                                statusCode: 200,
+                                data: data
+                            });
+                        }else{
+                            res.status(400).send({
+                                message: "Failed to delete from DB",
+                                statusCode: 400,
+                                error:error
+                            });
+                        }
+                        
+                    }
+                });}else{
+                    res.status(400).send({
+                        message: `Unable to find file with filename - ${reqFileName}`,
+                        statusCode: 400,
+                     });
+                }
+    }
+    catch(error){
+        return res.status(500).json({
+            message: 'Failed to delete file from aws.',
+            error: error
+        });
+    }
 }

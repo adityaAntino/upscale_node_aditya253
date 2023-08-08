@@ -16,7 +16,6 @@ const upload = multer({storage: storage ,limits: {
     fileSize: maxSize
 }}).single('file');
 
-
 const uploadFileMiddleware = util.promisify(upload);
 
 module.exports =  uploadFileMiddleware;

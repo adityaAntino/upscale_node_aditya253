@@ -1,8 +1,13 @@
 const router = require('express').Router()
 const fileUploadController = require('./file.upload.controller')
-const  upload  = require('./file.upload.middleware')
 
-router.post('/upload-file',upload,fileUploadController.uploadFile);
+const  uploadMiddleware  = require('./file.upload.middleware')
+
+const multer = require('multer');
+const upload = multer({});
+
+
+router.post('/upload-file',upload.single('file'),fileUploadController.uploadFile);
 
 router.get('/get-uploaded-file',fileUploadController.getUploadedFile);
 
